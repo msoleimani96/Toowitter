@@ -11,15 +11,18 @@ class User(models.Model):
 
 
 class Tweet(models.Model):
+    id = models.AutoField(primary_key=True)
     text = models.CharField(max_length=512)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
 
 
 class View(models.Model):
+    id = models.AutoField(primary_key=True)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     tweet = models.ForeignKey(Tweet, on_delete=models.CASCADE)
 
 
 class Like(models.Model):
+    id = models.AutoField(primary_key=True)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     tweet = models.ForeignKey(Tweet, on_delete=models.CASCADE)
