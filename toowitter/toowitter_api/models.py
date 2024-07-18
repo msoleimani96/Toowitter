@@ -1,5 +1,6 @@
 from django.db import models
 import datetime
+from django.contrib.auth.hashers import make_password
 
 
 class User(models.Model):
@@ -7,8 +8,12 @@ class User(models.Model):
     name = models.CharField(max_length=30)
     username = models.CharField(max_length=50)
     email = models.EmailField()
-    password = models.CharField(max_length=40)
+    password = models.TextField()
     bio = models.CharField(max_length=128)
+
+    def save(self):
+        self.password = make_password(self.password)
+        super(User, self).save()
 
     def __str__(self):
         return self.email
