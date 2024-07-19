@@ -1,6 +1,6 @@
 
 from rest_framework import serializers
-from models import Tweet, View, Like, User
+from toowitter_api.models import Tweet, View, Like, User
 
 
 class TweetSerializer(serializers.ModelSerializer):

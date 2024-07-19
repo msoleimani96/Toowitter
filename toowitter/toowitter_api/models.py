@@ -1,19 +1,25 @@
 from django.db import models
 import datetime
 from django.contrib.auth.hashers import make_password
+from django.contrib.auth.models import AbstractBaseUser, PermissionsMixin
+from toowitter_api.managers.managers import *
 
 
-class User(models.Model):
+class User(AbstractBaseUser, PermissionsMixin):
     id = models.AutoField(primary_key=True)
     name = models.CharField(max_length=30)
-    username = models.CharField(max_length=50)
-    email = models.EmailField()
+    username = models.CharField(max_length=50, unique=True)
+    email = models.EmailField(unique=True)
     password = models.TextField()
     bio = models.CharField(max_length=128)
 
-    def save(self):
-        self.password = make_password(self.password)
-        super(User, self).save()
+    is_staff = models.BooleanField(default=False)
+    is_active = models.BooleanField(default=True)
+
+    USERNAME_FIELD = "username"
+    REQUIRED_FIELDS = ['email', 'name', 'password', ]
+
+    objects = CustomUserManager()
 
     def __str__(self):
         return self.email
