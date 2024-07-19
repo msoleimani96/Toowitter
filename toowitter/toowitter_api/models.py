@@ -3,6 +3,10 @@ import datetime
 from django.contrib.auth.hashers import make_password
 from django.contrib.auth.models import AbstractBaseUser, PermissionsMixin
 from toowitter_api.managers.managers import *
+from django.dispatch import receiver
+from django.db.models.signals import post_save
+from django.conf import settings
+from rest_framework.authtoken.models import Token
 
 
 class User(AbstractBaseUser, PermissionsMixin):
@@ -45,3 +49,9 @@ class Like(models.Model):
     id = models.AutoField(primary_key=True)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     tweet = models.ForeignKey(Tweet, on_delete=models.CASCADE)
+
+
+@receiver(post_save, sender=settings.AUTH_USER_MODEL)
+def create_auth_token(sender, instance=None, created=False, **kwargs):
+    if created:
+        Token.objects.create(user=instance)
