@@ -13,3 +13,22 @@ This is a twitter like social media backend.
    source venv/bin/activate
    ```
    
+3. Install packages.
+   ```
+   pip install -r requirements.txt
+   ```
+
+4. Config MySQL settings in settings.py file.
+
+5. Migrate models.
+
+   ```
+   python manage.py makemigrations
+   python manage.py migrate
+   ```
+
+6. Run server.
+
+   ```
+   python manage.py runserver
+   ```
